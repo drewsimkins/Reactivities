@@ -1,3 +1,4 @@
+import { store } from './../stores/store';
 import axios, { AxiosError, AxiosResponse } from "axios";
 import { Activity } from "../models/activity";
 import {toast} from 'react-toastify'
@@ -37,7 +38,8 @@ axios.interceptors.response.use(async (response) => {
             history.push('/not-found')
             break;
         case 500:
-            toast.error('server error')
+            store.commonStore.setServerError(data);
+            history.push('/server-error');
             break;
     }
     return Promise.reject(error);
